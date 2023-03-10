@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testapp
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testapp
+  template:
+    metadata:
+      labels:
+        app: testapp
+    spec:
+      containers:
+        - name: testapp
+          image: sutoj/flaskapp:0.1
+          imagePullPolicy: Always
+          env:
+            - name: LISTEN_ADDRESS
+              value: "0.0.0.0"
+            - name: CALLBACK_URI
+              value: "https://testapp.yourdomain.com/auth"
+            - name: CLIENT_ID
+              value: "d1e3cfd0-cbea-402a-9e8c-60c59ac09027"
+            - name: BEHIND_PROXY
+              value: "1"
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: CLIENT_SECRET
+                  name: testapp
+          ports:
+            - name: testapp
+              containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            timeoutSeconds: 5
