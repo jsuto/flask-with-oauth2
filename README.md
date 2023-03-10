@@ -37,3 +37,8 @@ Create a system token and a JWT token encrypted by CLIENT_SECRET
 ### test_backend_with_system_token.py
 
 Test the app accessibility using a JWT token
+
+## Readme
+
+https://medium.com/innovation-incubator/flask-before-and-after-request-decorators-e639b06c2128
+https://medium.com/@nguyenkims/python-decorator-and-flask-3954dd186cda
